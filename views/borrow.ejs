@@ -1,0 +1,20 @@
+<%- include('./layout/header') %>
+<div class="ui items" style="padding: 0 100px;">
+    <% borrowUser.forEach(function(user){ %>
+    <div class="item">
+        <a class="ui tiny image" href="/profile/<%= user.userId%>"  style="width: 72px; height: 72px; overflow: hidden; background: #eee;">
+            <img src="/img/<%= user.avatar%>">
+        </a>
+        <div class="content">
+            <a class="header" href="/profile/<%= user.userId%>"><%= user.name%></a>
+            <div class="description">
+                <p><span style="color: #666;">Id</span> : <%= user.id%></p>
+                <p><span style="color: #666;">Borrow Time</span>: <%= user.borrowTime%></p>
+                <p><span style="color: #666;">Return Time</span>: <%= user.bool == false ? "Not returned" : user.returnTime%></p>
+
+            </div>
+        </div>
+    </div>
+    <% }) %>
+</div>
+<%- include('./layout/footer') %>

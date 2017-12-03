@@ -1,0 +1,117 @@
+<%- include('./layout/header') %>
+
+<div class="ui grid">
+    <div class="four wide column"></div>
+    <div class="eight wide column">
+        <form class="ui form segment" method="post" enctype="multipart/form-data">
+            <div class="field required">
+                <label>Student ID</label>
+                <input placeholder="Your student ID" type="text" name="id">
+            </div>
+            <div class="field required">
+                <label>Username</label>
+                <input placeholder="Your Username" type="text" name="name">
+            </div>
+            <div class="field required">
+                <label>Password</label>
+                <input placeholder="Your Password" type="password" name="password">
+            </div>
+            <div class="field required">
+                <label>Repeat Password</label>
+                <input placeholder="Repeat your password" type="password" name="repassword">
+            </div>
+            <div class="field required">
+                <label>Gender</label>
+                <select class="ui compact selection dropdown" name="gender">
+                    <option value="m">Male</option>
+                    <option value="f">Female</option>
+                    <option value="x">Secret</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Avatar</label>
+                <input type="file" name="avatar">
+            </div>
+            <div class="field">
+                <label>Self Introduction</label>
+                <textarea name="bio" rows="5"></textarea>
+            </div>
+            <input type="submit" onclick="signup()" class="ui green button fluid" value="Sign up">
+        </form>
+    </div>
+</div>
+
+<script>
+    function signup() {
+        $(".ui.form").form(
+            {   
+                inline: true,
+                on: 'blur',
+                fields: {
+                    id: {
+                        identifier: 'id',
+                        rules: [{
+                            type: 'empty',
+                            prompt: 'Student ID should not be empty'
+                        }, {
+                            type: 'exactLength[11]',
+                            prompt: 'Your Student ID\'s format is not correct,please enter 11 digits'
+                        }, {
+                            type: 'number',
+                            prompt: 'Your Student ID\'s format is not correct,please enter a valid number'
+                        }]
+                    },
+                    username: {
+                        identifier: 'name',
+                        rules: [{
+                            type: 'empty',
+                            prompt: 'Username should not be empty'
+                        },{
+                            type: 'maxLength[10]',
+                            prompt: 'Please limit the name to 1-10 characters'
+                        }]
+                    },
+                    userpass: {
+                        identifier: 'password',
+                        rules: [{
+                            type: 'empty',
+                            prompt: 'Password should not be empty'
+                        },{
+                            type: 'minLength[6]',
+                            prompt: 'Please input at least 6 characters'
+                        }]
+                    },
+                    repassword: {
+                        identifier: 'repassword',
+                        rules: [{
+                            type: 'empty',
+                            prompt: 'Repassword should not be empty'
+                        },{
+                            type: 'match[password]',
+                            prompt: 'Repassword should be same as Password!'
+                        }]
+                    },
+                    gender: {
+                        identifier: 'gender',
+                        rules: [{
+                            type: 'empty',
+                            prompt: 'gender should not be empty'
+                        }]
+                    },
+                    bio: {
+                        identifier: 'bio',
+                        rules: [{
+                            type: 'maxLength[30]',
+                            prompt: 'Personal profile please limit to 30 characters'
+                        }]
+                    }
+                },
+            }, {
+                onSuccess: function () {
+                    console.log('ok')
+                }
+            }
+        );
+    }
+</script>
+<%- include('./layout/footer') %>

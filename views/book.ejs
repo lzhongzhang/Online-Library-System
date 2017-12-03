@@ -1,0 +1,118 @@
+<%- include('./layout/header') %>
+    <style>
+        .blockHidden {
+            display: none !important;
+        }
+    </style>
+    <div class="bookWrapper ui vertically divided grid" style="padding: 0 200px;">
+        <h1 style="font-size: 26px; color: #494949;">
+            <%= book.name %>
+        </h1>
+        <div class="two column row">
+            <div class="column" style="display: flex;">
+                <div>
+                    <img class="imgTarget" style="width: 200px;" src="<%= "/img/"+book.cover %>">
+                </div>
+                <div style=" margin-left: 30px;">
+                    <p>   
+                        <span style="color: #666666;">Book ID</span>: <%= book._id%>
+                    </p>
+                    <p>   
+                        <span style="color: #666666;">Location</span>: <%= book.location%>
+                    </p>
+                    <p>   
+                        <span style="color: #666666;">Author</span>: <%= book.author%>
+                    </p>
+                    <p> 
+                        <span style="color: #666666;">Press</span>: <%= book.press%>
+                    </p>
+                    <p>
+                        <span style="color: #666666;">Published Date</span>: <%= book.date%>
+                    </p>
+                    <p> 
+                        <span style="color: #666666;">Score</span>: 
+                        <span class="ui star rating" data-rating="<%= book.score %>" data-max-rating="5"></span>
+                    </p>
+                    <p>
+                        <span style="color: #666666;">Inventory</span>: <%= book.inventory%>
+                    </p>
+                    <p>
+                        <span style="color: #666666;">Pv</span>: <%= book.pv%>
+                    </p>
+                    
+                </div>
+            </div>
+            <div class="column">
+                <% if (user) { %>
+                    <% if(user.isAdmin){%>
+                        <div  class="borrowBtn extra right floated">
+                            <div class="ui right floated primary button  <% if (!book.inventory) {%> disabled <% } %>">
+                                <i class="book icon"></i>
+                                Borrow One
+                            </div>
+                        </div>
+                    <% } %>
+                <% } %>
+                        
+            </div>
+        </div>
+        <div class="one column row">
+            <div class="column">
+                <h2 style="color:#4fc08d; font-size: 20px;">Brief Introduction</h2>
+                <p><%- book.introduction %></p>
+            </div>
+            
+        </div>
+
+        <% if (user) { %>
+            <% if(user.isAdmin){%>
+            <div class="ui small test modal bModel transition hidden">
+                <div class="header">Borrow the book by student ID </div>
+                <div class="content">
+                    <div class="ui stacked segment">
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="user icon"></i>
+                                <input class="id_input" type="text" name="user_id" placeholder="Student ID">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <div id="no" class="ui negative button">No </div>
+                    <div id="yes" class="ui positive right labeled icon button" onclick="">
+                        Yes
+                        <a id="sureLink" href="/library/<%= book._id%>/borrow" style="color: #fff;"></a>
+                        <i class="checkmark icon"></i>
+                    </div>
+                </div>
+            </div>
+            <%}%>
+        <% } %>   
+        
+    </div>
+    <script>
+        $(function() {
+            $('.ui .rating').rating('disable');
+            $('.borrowBtn').on('click', function() {
+                 $('.small.bModel').modal('show');
+            })
+            $('.reBtn').on('click', function() {
+                 $('.small.alertModal').modal('show');
+            })
+            
+            var $id_input = $('.id_input'),
+                $sureLink = $('#sureLink');
+            $('#yes').on('click', function() {
+                var userId = $id_input.val();
+                if (!userId) {
+                    return;
+                }
+                var temp = $sureLink[0].href;
+                $sureLink[0].href = temp + '/' + userId;
+
+                window.location.href = $sureLink[0].href;
+            })
+        })
+    </script>
+<%- include('./layout/footer') %>

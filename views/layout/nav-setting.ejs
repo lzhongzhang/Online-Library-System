@@ -1,0 +1,62 @@
+<div class="ui menu <%if (user) {%><% if (user.isAdmin) {%> inverted <% } %> <% } %>" style="border-radius: 0;">
+    <a class="item" href="/"><i class="home icon"></i>Home</a>
+   
+    <div class="right menu">
+        <div class="item">
+            <div class="ui action left icon input">
+                <i class="search icon"></i>
+                <input id="searchInput" type="text" name="payload" placeholder="Title, Author or Press">
+                <a id="realSearchPath" href="/search/" style="color: #fff;">
+                    <div id="search" class="ui animated green button <%if (user) {%><% if (user.isAdmin) {%> inverted<% } %><% } %>" tabindex="0">
+                        <div class="visible content">Submit</div>
+                        <div class="hidden content">
+                            <i class="right arrow icon"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+       
+        <% if (user) { %>
+            <a class="item" href="/profile/<%= user._id %>"><i class="user icon"></i><%= user.name %></a>
+            <div class="divider"></div>
+            <a class="item" href="/signout"><i class="sign out icon"></i>Sign out</a>
+            <% if (user.isAdmin) {%>
+                <div class="ui dropdown item">
+                    <i class="icon bars"></i>
+                    <div class="menu">
+                        <a class="item" href="/library"><i class="configure icon"></i>Library management</a>
+                        <a class="item" href="/quick_borrow"><i class="exchange icon"></i>Quick Borrow&Return</a>
+                        <a class="item" href="/signup"><i class="add user icon"></i>Sign up</a>
+                    </div>
+                </div>
+            <% } else { %>
+                <div></div>
+            <% } %>
+        <% } else { %>
+            <a class="item" href="/signin"><i class="sign in icon"></i>Sign in</a>
+        <% } %>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        var $search = $('#search'),
+            $sInput = $('#searchInput'),
+            $sSubmit = $('#realSearchPath');
+        
+        $search.on('click', function(e) {
+            var sData = $sInput[0].value,
+                pathname = window.location.href,
+                type = 'home';
+            
+            if (pathname.match(/(library)/)) {
+                type = 'library';
+            }
+            if (sData) {
+                $sSubmit[0].href = '/search/' + encodeURIComponent(sData) + '?type=' + type;
+            }else {
+                e.preventDefault();
+            }
+        }) 
+    })
+</script>

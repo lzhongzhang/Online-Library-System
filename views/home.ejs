@@ -1,0 +1,54 @@
+<%- include('./layout/header') %>
+    <style>
+        .ui .image:hover {
+            border-bottom: 3px solid #4fc08d;
+        }
+    </style>
+    <div class="ui stackable four column grid" style="padding: 0 100px;">
+        <% books.forEach(function (book) { %>
+            <% if (book.show === true) {%>
+                <div class="column bookItem" style="margin: 20px 0;">
+                    <div class="ui card cardWrap">
+
+                        <a class="image" href="/library/<%= book._id%>">
+                            <img class="imgTarget" style="height: 360px;" src="<%= "/img/"+book.cover %>">
+                        </a>
+                        <div class="content">
+                            <div  style="width: 100%;display: flex; justify-content: space-between;">
+                                <a style="font-size: 18px; color: #000;" class="header" href="/library/<%= book._id%>"><%= book.name %></a>
+                                <div class="ui star rating" data-rating="<%= book.score %>" data-max-rating="5"></div>
+                            </div>
+
+                            <div class="meta">
+                                <a><%= book.author %></a>
+                            </div>
+
+                            <div>
+                                <%var favoriteInfo = {}%>
+                                Like <i onclick="setLike(this)" class="fa fa-heart-o" id="addFavorite"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        <% }) %>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('.ui .rating').rating('disable');
+            $('.imgTarget').each(function (index, item) {
+                if (item.src.split("http://localhost:3000/img/")[1].slice(0, 4) === "http") {
+                    item.src = item.src.split("http://localhost:3000/img/")[1];
+                }
+            });
+
+        })
+        function setLike(like){
+            like.classList.toggle("fa-heart");
+            like.classList.toggle("fa-heart-o");
+        }
+
+
+    </script>
+<%- include('./layout/footer') %>

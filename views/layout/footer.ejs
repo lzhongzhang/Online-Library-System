@@ -1,0 +1,26 @@
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        if ($('.ui.success.message').length > 0) {
+            setTimeout(function() {
+                $('.ui.success.message').fadeOut(400)
+            }, 3000)
+        } else if ($('.ui.error.message').length > 0) {
+            setTimeout(function() {
+                $('.ui.error.message').fadeOut(400)
+            }, 3000)
+        }
+
+        $('.ui.dropdown').dropdown();
+
+        $('.post-content .avatar-link').popup({
+            inline: true,
+            position: 'bottom right',
+            lastResort: 'bottom right'
+        });
+    })
+    </script>
+
+</body>
+
+</html>

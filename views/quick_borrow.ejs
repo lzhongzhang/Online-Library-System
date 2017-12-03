@@ -1,0 +1,68 @@
+<%- include('./layout/header') %>
+<div class="ui grid">
+    <div class="five wide column"></div>
+    <div class="six wide column">
+        <div class="ui middle aligned center aligned grid">
+            <div class="column">
+                <h2 class="ui teal image header">
+                    <div class="content">
+                        Quick Borrow & Return
+                    </div>
+                </h2>
+                <form class="ui large form" method="post">
+                    <div class="ui stacked segment">
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="book icon"></i>
+                                <input id="book_id" type="text" name="book_id" placeholder="Book ID">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="user icon"></i>
+                                <input id="reader_id" type="text" name="reader_id" placeholder="Reader ID">
+                            </div>
+                        </div>
+                        <div>
+                            <div id="bookReturn" class="ui button">Return</div>
+                            <div id="bookBorrow" class="ui green button">Borrow</div>
+                        </div>
+                    </div>
+                    <div class="ui error message"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(function() {
+        var $dom = {
+            book_id: $('#book_id'),
+            reader_id: $('#reader_id'),
+            bookReturn: $('#bookReturn'),
+            bookBorrow: $('#bookBorrow')
+        }
+        
+        $dom.bookBorrow.on('click', function() {
+            var bookId_val = $dom.book_id.val(),
+                readerId_val = $dom.reader_id.val();
+            if (bookId_val && readerId_val) {
+                window.location.href = '/library/'+ bookId_val +'/borrow/' + readerId_val ;
+            }
+            
+        })
+
+        $dom.bookReturn.on('click', function() {
+            var bookId_val = $dom.book_id.val(),
+                readerId_val = $dom.reader_id.val();
+            if (bookId_val && readerId_val) {
+                window.location.href = '/profile/'+ bookId_val +'/return2/' + readerId_val ;
+            }
+        })
+        
+    })
+
+</script>
+<%- include('./layout/footer') %>

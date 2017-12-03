@@ -1,0 +1,126 @@
+<%- include('./layout/header') %>
+    <div class="userWrapper ui vertically divided grid" style="padding: 0 200px;">
+        <h1 style="font-size: 26px; color: #494949;">
+            <%= profile.name %>
+        </h1>
+        <div class="two column row">
+            <div class="column" style="display: flex;">
+                <div>
+                    <div style="width: 200px; height: 200px; background: #eee; overflow: hidden;">
+                        <img style="width: 200px; height: 200px;"  src="<%= "/img/"+profile.avatar %>">
+                    </div>
+                </div>
+                <div style="margin-left: 30px;">
+                    <p>
+                        <span style="color: #666666;">Id</span>:
+                        <%= profile.id%>
+                    </p>
+                    <p>
+                        <span style="color: #666666;">Gender</span>:
+                        <span data-gender="<%= profile.gender%>" class="gender"></span>
+                    </p>
+                    <p>
+                        <span style="color: #666666;">Introduction</span>:
+                        <%= profile.bio%>
+                    </p>
+                </div>
+            </div>
+            <div class="column">
+            </div>
+        </div>
+        <div class="one column row">
+            <div class="column">
+                <h2 style="color:#4fc08d; font-size: 20px;">Borrowed books</h2>
+                <div class="ui items">
+                   <% borrow.forEach(function(item) {%>
+                    <div class="borrowItem item" data-id="<%= item.id %>" data-bookid="<%= item.bookId%>" data-userid="<%= user.id%>">
+                        <div class="ui small image">
+                            <a href="/library/<%= item.bookId %>"><img class="item-cover" style="height: 180px;" src="/img/<%= item.cover %>"></a>
+                        </div>
+                        <div class="content">
+                            <div class="header">
+                                <a href="/library/<%= item.bookId %>"><%= item.name %></a>
+                            </div>
+                            <div class="meta" >
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span class="price"><%= item.author %></span>
+                                    <span class="borrowId"><%= item.id %></span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span class="stay">Borrow date: <%= item.created_at %> </span>
+                                    <% if(item.bool) {%>
+                                            <span class="borrowId" style="color: red;">Return date: <%= item.returnDate %></span>
+                                    <% } else {%>
+                                            <span class="expire_date" style="color: red;">Expire date: <%= item.returnTime %></span>
+                                    <% }%>
+                                    
+                                </div>
+                            </div>
+                            <div class="description">
+                                <p class="text-overflow" style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3; overflow: hidden; ">
+                                    <%= item.introduction %>
+                                </p>
+                            </div>
+                            <div class="description">
+                                <% if(item.bool) {%>
+                                        <p class="text-overflow" style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3; overflow: hidden; ">
+                                            Returned
+                                        </p>
+                                <% } else {%>
+                                        <p class="text-overflow" style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3; overflow: hidden; ">
+                                            Not returned
+                                        </p>
+                                <% }%>
+                                
+                                
+                            </div>
+                            <% if(user._id == '5a1e5e12e3028a132aee2bab' && !item.bool){%>
+                            <div class="extra returnBtn">
+                                <div class="ui right floated primary button">Return the book <i class="right chevron icon"></i> </div>
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui small test modal transition hidden">
+            <div class="header">Return the book </div>
+            <div class="content">
+                <p>Are you sure you want to return this book?</p>
+            </div>
+            <div class="actions">
+                <div id="noDelete" class="ui negative button">No </div>
+                <div id="yesDelete" class="ui positive right labeled icon button" onclick="$(this).find('#sureLink')[0].click();">
+                    <a style="color: #fff; " id="sureLink" href="#">Yes</a> <i class="checkmark icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $('.ui .rating').rating('disable');
+            var $gender = $('.gender');
+            var gender = $gender.data('gender');
+            switch (gender) {
+                case 'm': $gender.text('male');break;
+                case 'f': $gender.text('female');break;
+                default: $gender.text('secret');
+            }
+
+            var returnBtn = $('.returnBtn');
+            $.each(returnBtn, function (index, item) {
+                $(item).on('click', function (event) {
+                    var itemId = $(this).closest('.borrowItem').data('id'),
+                        itemBookId = $(this).closest('.borrowItem').data('bookid');
+                        userId = $(this).closest('.borrowItem').data('userid');
+                    $('.small.modal').find('#sureLink')[0].href = '/profile/'+ itemBookId +'/return2/' + userId;
+                    $('.small.modal').modal('show');
+                })
+            });
+
+        })
+    </script>
+    <%- include('./layout/footer') %>
