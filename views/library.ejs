@@ -73,7 +73,7 @@
                             </div>
                         </td>
                         <td class="ui single line aligned">
-                            <button class="ui green button edit">
+                            <button class="ui green button edit <% if (book.show === false) { %>disabled<% } %>">
                                 Edit</button>
                             <button class="ui orange button delete <% if (book.borrowCount > 0 || book.show === false) { %>disabled<% } %>">
                                 Delete</button>

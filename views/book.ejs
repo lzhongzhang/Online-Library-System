@@ -46,7 +46,7 @@
                 <% if (user) { %>
                     <% if(user.isAdmin){%>
                         <div  class="borrowBtn extra right floated">
-                            <div class="ui right floated primary button  <% if (!book.inventory) {%> disabled <% } %>">
+                            <div class="ui right floated primary button  <% if (!book.inventory || !book.show) {%> disabled <% } %>">
                                 <i class="book icon"></i>
                                 Borrow One
                             </div>

@@ -12,7 +12,6 @@ router.get('/:bookId', checkIsAdmin, async (function (req, res, next) {
     var result = [];
     try {
         var users = await (BorrowBookModel.getBorrowUsers(bookId));
-        // users = users.filter(function(user){return user.bool});
         users.forEach(async (function(user){
             var userInfo = await (UserModel.getUserByDefaultId(user.userId))
             result.push({
@@ -28,7 +27,6 @@ router.get('/:bookId', checkIsAdmin, async (function (req, res, next) {
             })
         }));
 
-        // }));
         setTimeout(function() {
             res.render('borrow', {
                 borrowUser: result

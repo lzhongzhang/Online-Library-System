@@ -21,7 +21,7 @@ module.exports = {
         return Library
             .find(query)
             .populate({ path: 'admin', model: 'User' })
-            .sort({ _id: -1 })
+            .sort({"inventory" : -1})
             .addCreatedAt()
             .exec();
     },
