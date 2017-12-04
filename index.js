@@ -36,7 +36,7 @@ app.use(require('express-formidable')({
 }));
 
 app.locals.blog = {
-    title: 'Welcome to our library!'
+    title: 'Welcome to Sierra!'
 };
 
 app.use(function (req, res, next) {
