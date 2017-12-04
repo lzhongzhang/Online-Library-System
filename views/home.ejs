@@ -4,6 +4,7 @@
         border-bottom: 3px solid #4fc08d;
     }
 </style>
+
 <div class="ui stackable four column grid" style="padding: 0 100px;">
     <% books.forEach(function (book) { %>
         <%if (book.show) {%>
@@ -47,6 +48,7 @@
                 item.src = item.src.split("http://localhost:3000/img/")[1];
             }
         });
+
         var likeBtn = $('i');
         $.each(likeBtn, function(index, item) {
             $(item).on('click', function() {
@@ -65,10 +67,11 @@
 
 
             })
-        })
+        });
+
+
     })
 
 </script>
-
 
 <%- include('./layout/footer') %>

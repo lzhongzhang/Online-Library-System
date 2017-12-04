@@ -6,7 +6,6 @@ var async = require('asyncawait/async');
 var await = require('asyncawait/await');
 var LibraryModel = require('../models/library');
 var BorrowBookModel = require('../models/borrowBooks');
-// var FavoriteModel = require('../models/FavoriteBook');
 var UserModel = require('../models/users');
 var checkLogin = require('../middlewares/check').checkLogin;
 var checkIsAdmin = require('../middlewares/check').checkIsAdmin;

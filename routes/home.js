@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var Library = require('../lib/mongo').Library;
 var async = require('asyncawait/async');
 var await = require('asyncawait/await');
 var mongo = require('mongodb');
@@ -11,9 +11,18 @@ var FavoriteModel = require('../lib/mongo').Favorite;
 
 
 router.get('/', async (function (req, res, next) {
+    var query = {};
+    query.admin = '5a246f7a4015d2070b89df75';
+    // var perPage = 4;
+    // var page = req.query.page || 1;
 
-    var books = await (LibraryModel.getBooks('5a246f7a4015d2070b89df75'));
-    console.log(books);
+    var curcount;
+    var books = await (Library
+        .find(query)
+        .populate({ path: 'admin', model: 'User' })
+        .sort({"inventory" : -1})
+        .addCreatedAt()
+        .exec());
     var result = [];
     if(req.session.user) {
         books.forEach(async (function(book) {
@@ -40,7 +49,6 @@ router.get('/', async (function (req, res, next) {
     else {
         result = books;
     }
-
     setTimeout(function() {
 
         res.render('home', {

@@ -16,7 +16,7 @@ module.exports = {
     getBooks: function(admin) {
         var query = {};
         if (admin) {
-            query.admin = admin;
+            query.admin = "5a246f7a4015d2070b89df75";
         }
         return Library
             .find(query)
