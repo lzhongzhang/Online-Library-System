@@ -1,4 +1,4 @@
-# Online Library Management System
+# Online Library System
 
 ### Implemented following major functionalities:
 - User signup: Register a new user to the system. 
